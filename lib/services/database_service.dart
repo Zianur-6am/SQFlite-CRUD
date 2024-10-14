@@ -14,7 +14,8 @@ class DatabaseService {
 
   final String _taskTableName = "tasks";
   final String _tasksIdColumnName = "id";
-  final String _taskContentColumnName = "content";
+  final String _taskTitleColumnName = "title";
+  final String _taskDescriptionColumnName = "description";
   final String _taskStatusColumnName = "status";
 
   //private constructor ---> helps to achieve singleton pattern
@@ -50,7 +51,8 @@ class DatabaseService {
         db.execute('''
           CREATE TABLE $_taskTableName(
           $_tasksIdColumnName INTEGER PRIMARY KEY,
-          $_taskContentColumnName TEXT NOT NULL,
+          $_taskTitleColumnName TEXT NOT NULL,
+          $_taskDescriptionColumnName TEXT NOT NULL,
           $_taskStatusColumnName INTEGER NOT NULL
           )
           ''');
@@ -61,13 +63,13 @@ class DatabaseService {
   }
   //stop -------------> setting up database
 
-  void addTask(String content) async {
+  void addTask(String title, String description) async {
     //getting the database
     final db = await database;
 
     //operating insert operation
     await db?.insert(_taskTableName,
-        {_taskContentColumnName: content, _taskStatusColumnName: 0});
+        {_taskTitleColumnName: title,_taskTitleColumnName: description, _taskStatusColumnName: 0});
   }
 
   Future<List<Tasks>?> getTask() async {
@@ -77,11 +79,12 @@ class DatabaseService {
     //query for database
     final data = await db?.query(_taskTableName);
 
-    //converting to list of Tasks model
+    //converting to list of Tasks model*************
     List<Tasks>? tasks = data?.map((e) => Tasks(
         id: e["id"] as int,
-        content: e["content"] as String,
-        status: e["status"] as int),
+        title: e["title"] as String,
+        status: e["status"] as int,
+        description: e['description'] as String),
     ).toList();
 
     return tasks;

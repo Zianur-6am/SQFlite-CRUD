@@ -36,15 +36,17 @@ class _HomePageState extends State<HomePage> {
 
               title: const Text("Add task"),
               content: Column( mainAxisSize: MainAxisSize.min, children: [
-                  TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        _task = value;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Add Task",
+                  Expanded(
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          _task = value;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Add Task",
+                      ),
                     ),
                   ),
 
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                     color: Theme.of(context).colorScheme.primary,
                     onPressed: () {
                       if(_task != null || _task != ""){
-                        _databaseService.addTask(_task!);
+                        // _databaseService.addTask(_task!);
 
                         setState(() {
                           _task = "";
@@ -64,10 +66,10 @@ class _HomePageState extends State<HomePage> {
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Sending Message"),));
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       "Done",
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary),
+                          color: Colors.black),
                     ),
                   ),
                 ],
@@ -94,7 +96,12 @@ class _HomePageState extends State<HomePage> {
                             leading: const Icon(Icons.edit),
                             title: const Text("Edit Task"),
                             onTap: (){
-                              Get.changeTheme(ThemeData.light());
+                              Get.toNamed('/update_task',
+                              arguments: {
+                                'title' : task.title,
+                                'description' : task.description,
+                                'id' : task.id,
+                              });
                             },
                           ),
                           ListTile(
@@ -125,7 +132,7 @@ class _HomePageState extends State<HomePage> {
 
                 });
               },
-              title: Text(task!.content),
+              title: Text(task!.title),
               trailing:
               Checkbox(
                   value: task.status == 1,
