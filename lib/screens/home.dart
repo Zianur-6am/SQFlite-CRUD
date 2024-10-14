@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:sqflite_crud_practice_project/services/database_service.dart';
 
 import '../Models/tasks.dart';
@@ -14,11 +16,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final DatabaseService _databaseService = DatabaseService.instance;
 
-  String? _task = null;
+  String? _task = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Task List"),),
       floatingActionButton: _addTaskButton(),
       body: _tasksList(),
     );
@@ -52,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                         _databaseService.addTask(_task!);
 
                         setState(() {
-                          _task = null;
+                          _task = "";
                         });
                         //Terminating the dialog
                         Navigator.pop(context);
@@ -82,6 +85,40 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index){
             Tasks? task = snapshot.data?[index];
             return ListTile(
+              onTap: (){
+                Get.bottomSheet(
+                    Container(
+                      child: Wrap(
+                        children: [
+                          ListTile(
+                            leading: const Icon(Icons.edit),
+                            title: const Text("Edit Task"),
+                            onTap: (){
+                              Get.changeTheme(ThemeData.light());
+                            },
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.delete),
+                            title: const Text("Delete Task"),
+                            onTap: (){
+                              Get.changeTheme(ThemeData.dark());
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+
+                    //properties of bottomsheet
+
+                    // barrierColor: Colors.blue,
+                    backgroundColor: Colors.orange,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                      //borderRadius: BorderRadius.circular(10),
+                    )
+                );
+
+              },
               onLongPress: (){
                 _databaseService.deleteTask(task.id);
                 setState(() {
@@ -89,7 +126,8 @@ class _HomePageState extends State<HomePage> {
                 });
               },
               title: Text(task!.content),
-              trailing: Checkbox(
+              trailing:
+              Checkbox(
                   value: task.status == 1,
                   onChanged: (value){
                     _databaseService.updateTaskStatus(task.id, value == true ? 1 : 0);
