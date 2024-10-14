@@ -16,10 +16,15 @@ class _UpdateTaskState extends State<UpdateTask> {
 
   final DatabaseService _databaseService = DatabaseService.instance;
 
+
   static Map<String,dynamic> arguments = Get.arguments ?? {};
-  String title = arguments['title'] ??'';
+
+
+  String title = arguments['title'] ?? '';
   String description = arguments['description'] ?? '';
   int id = arguments['id'] ?? '';
+  int status = arguments['status'] ?? '';
+
 
 
   @override
@@ -31,7 +36,7 @@ class _UpdateTaskState extends State<UpdateTask> {
           children: [
             TextFormField(
               initialValue: title,
-              decoration: InputDecoration(labelText: 'Title'),
+              decoration: InputDecoration(labelText: 'Title', border: OutlineInputBorder()),
               validator: (value) {
                 if (value!.isEmpty) return 'Please enter Title';
                 return null;
@@ -42,10 +47,11 @@ class _UpdateTaskState extends State<UpdateTask> {
                 });
               },
             ),
+            SizedBox(height: 10,),
 
             TextFormField(
               initialValue: description,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: InputDecoration(labelText: 'Description', border: OutlineInputBorder()),
               validator: (value) {
                 if (value!.isEmpty) return 'Please enter a description.';
                 return null;
@@ -59,15 +65,9 @@ class _UpdateTaskState extends State<UpdateTask> {
             ElevatedButton(
               onPressed: (){
                 if(title != "" || description != ""){
-                  _databaseService.addTask(title, description);
+                  _databaseService.updateTaskStatus(id, title, description, status);
 
-                  // setState(() {
-                  //   title = "";
-                  // });
-
-
-                  // //Terminating the dialog
-                  // Navigator.pop(context);
+                  Get.back();
                 }
                 else{
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Sending Message"),));

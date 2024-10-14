@@ -69,7 +69,7 @@ class DatabaseService {
 
     //operating insert operation
     await db?.insert(_taskTableName,
-        {_taskTitleColumnName: title,_taskTitleColumnName: description, _taskStatusColumnName: 0});
+        {_taskTitleColumnName : title, _taskDescriptionColumnName : description, _taskStatusColumnName : 0});
   }
 
   Future<List<Tasks>?> getTask() async {
@@ -90,7 +90,7 @@ class DatabaseService {
     return tasks;
   }
 
-  void updateTaskStatus(int id, int status) async {
+  void updateTaskStatus(int id, String title, String description, int status) async {
     //getting the database
     final db = await database;
     //Query to update table
@@ -99,7 +99,9 @@ class DatabaseService {
         _taskTableName,
       //things to update
         {
-          _taskStatusColumnName: status
+          _taskTitleColumnName : title,
+          _taskDescriptionColumnName : description,
+          _taskStatusColumnName : status
         },
       //if we do not provide specific id then all the row will be updated
       where: 'id = ?',

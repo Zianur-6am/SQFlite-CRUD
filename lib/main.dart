@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
       ///routing
 
-      initialRoute: '/home',
+      // initialRoute: '/home',
       defaultTransition: Transition.fadeIn,
 
       getPages: [

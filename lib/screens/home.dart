@@ -16,7 +16,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final DatabaseService _databaseService = DatabaseService.instance;
 
-  String? _task = "";
+
+  // late DatabaseService _databaseService;
+  // List<Tasks> tasks = [];
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    // _databaseService = DatabaseService.instance;
+    // _fetchProducts();
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,52 +44,7 @@ class _HomePageState extends State<HomePage> {
   Widget _addTaskButton() {
     return FloatingActionButton(
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-
-              title: const Text("Add task"),
-              content: Column( mainAxisSize: MainAxisSize.min, children: [
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          _task = value;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Add Task",
-                      ),
-                    ),
-                  ),
-
-                  MaterialButton(
-                    color: Theme.of(context).colorScheme.primary,
-                    onPressed: () {
-                      if(_task != null || _task != ""){
-                        // _databaseService.addTask(_task!);
-
-                        setState(() {
-                          _task = "";
-                        });
-                        //Terminating the dialog
-                        Navigator.pop(context);
-                      }
-                      else{
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Sending Message"),));
-                      }
-                    },
-                    child: const Text(
-                      "Done",
-                      style: TextStyle(
-                          color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+          Get.toNamed('/add_task');
         },
         child: const Icon(Icons.add));
   }
@@ -95,20 +64,30 @@ class _HomePageState extends State<HomePage> {
                           ListTile(
                             leading: const Icon(Icons.edit),
                             title: const Text("Edit Task"),
-                            onTap: (){
-                              Get.toNamed('/update_task',
+                            onTap: () async{
+                              await Get.toNamed('/update_task',
                               arguments: {
                                 'title' : task.title,
                                 'description' : task.description,
                                 'id' : task.id,
-                              });
+                                'status' : task.status
+                              },
+                              );
+
+                              Get.back();
+
                             },
                           ),
                           ListTile(
                             leading: const Icon(Icons.delete),
                             title: const Text("Delete Task"),
                             onTap: (){
-                              Get.changeTheme(ThemeData.dark());
+                              _databaseService.deleteTask(task.id);
+                              setState(() {
+
+                              });
+
+                              Get.back();
                             },
                           )
                         ],
@@ -126,21 +105,20 @@ class _HomePageState extends State<HomePage> {
                 );
 
               },
-              onLongPress: (){
-                _databaseService.deleteTask(task.id);
-                setState(() {
-
-                });
-              },
-              title: Text(task!.title),
-              trailing:
-              Checkbox(
+              title: Text(task!.title, style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+              subtitle: Text(task.description, style: TextStyle(fontSize: 14),),
+              trailing: Checkbox(
+                  //assigning the value to the ui
                   value: task.status == 1,
-                  onChanged: (value){
-                    _databaseService.updateTaskStatus(task.id, value == true ? 1 : 0);
+                  onChanged: (val){
+                    _databaseService.updateTaskStatus(task.id, task.title, task.description,  (val == true ? 1 : 0));
                     setState(() {
                     });
                   }),
+              contentPadding: EdgeInsets.all(10),
+              shape: Border(
+                bottom: BorderSide(),
+              ),
             );
 
       });
