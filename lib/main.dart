@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sqflite_crud_practice_project/internationalization/messages.dart';
 import 'package:sqflite_crud_practice_project/screens/add_task.dart';
 import 'package:sqflite_crud_practice_project/screens/home.dart';
 import 'package:sqflite_crud_practice_project/screens/update_task.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +37,14 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/add_task', page: () => AddTask()),
         GetPage(name: '/update_task', page: () => UpdateTask()),
       ],
+
+
+      ///Internationalization
+      translations: Messages(),
+      locale: Locale('en', 'Us'),
+      fallbackLocale: Locale('en', 'US'),
+
+
       home: const HomePage(),
 
     );

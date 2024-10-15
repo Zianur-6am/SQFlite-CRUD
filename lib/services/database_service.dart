@@ -79,7 +79,7 @@ class DatabaseService {
     //query for database
     final data = await db?.query(_taskTableName);
 
-    //converting to list of Tasks model*************
+    //converting to list, of Tasks model*************
     List<Tasks>? tasks = data?.map((e) => Tasks(
         id: e["id"] as int,
         title: e["title"] as String,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sqflite_crud_practice_project/services/database_service.dart';
+import 'package:sqflite_crud_practice_project/controllers/task_controllers.dart';
+
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -11,10 +12,12 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
 
-  final DatabaseService _databaseService = DatabaseService.instance;
 
-  String title = '';
-  String description = '';
+  final TaskController taskController = Get.find();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
 
 
@@ -22,58 +25,57 @@ class _AddTaskState extends State<AddTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(20),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Title', border: OutlineInputBorder()),
-                validator: (value) {
-                  if (value!.isEmpty) return 'Please enter Title';
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    title = value;
-                  });
-                },
-              ),
-              SizedBox(height: 10,),
-
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Description', border: OutlineInputBorder()),
-                validator: (value) {
-                  if (value!.isEmpty) return 'Please enter a description.';
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    description = value;
-                  });
-                },
-              ),
-              ElevatedButton(
-                  onPressed: (){
-                    if(title != "" || description != ""){
-                      _databaseService.addTask(title, description);
-
-                      setState(() {
-                        title = "";
-                        description = "";
-                      });
-
-                      // //Terminating the dialog
-                      // Navigator.pop(context);
-                      Get.back();
-                    }
-                    else{
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Please fill the task"),));
-                    }
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: titleController,
+                  decoration: InputDecoration(labelText: 'title'.tr, border: OutlineInputBorder()),
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter Title';
+                    return null;
                   },
-                  child: Text("Add Task"),
-              ),
-            ],
+            
+                ),
+                SizedBox(height: 10,),
+            
+                TextFormField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(labelText: 'description'.tr, border: OutlineInputBorder()),
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter a description.';
+                    return null;
+                  },
+            
+                ),
+                ElevatedButton(
+                    onPressed: (){
+                      if (_formKey.currentState!.validate()) {
+
+                        taskController.addTaskController(titleController.text, descriptionController.text);
+                        Get.back();
+                      }
+
+                      ///without form validation
+                      // if(titleController.text.replaceAll(' ', '') != "" &&
+                      //     descriptionController.text.replaceAll(' ', '') != ""){
+                      //
+                      //   taskController.addTaskController(titleController.text, descriptionController.text);
+                      //
+                      //   Get.back();
+                      // }
+                      // else{
+                      //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Please fill the task"),));
+                      // }
+                    },
+                    child: const Text("Add Task"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
