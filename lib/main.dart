@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite_crud_practice_project/internationalization/messages.dart';
 import 'package:sqflite_crud_practice_project/screens/add_task.dart';
-import 'package:sqflite_crud_practice_project/screens/home.dart';
+import 'package:sqflite_crud_practice_project/features/home/screen/home.dart';
 import 'package:sqflite_crud_practice_project/screens/update_task.dart';
 
 

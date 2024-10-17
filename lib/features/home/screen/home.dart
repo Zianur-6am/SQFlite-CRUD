@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite_crud_practice_project/controllers/task_controllers.dart';
 
-import '../Models/tasks.dart';
+import '../../../Models/tasks.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
