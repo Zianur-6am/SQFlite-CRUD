@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite_crud_practice_project/controllers/task_controllers.dart';
 
-import '../../../Models/tasks.dart';
+import '../domain/model/tasks.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,16 +19,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Task List", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),),
+      appBar: AppBar(title: const Text("Task List", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           Get.toNamed('/add_task');
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: Obx(() {
         if(taskController.tasks.isEmpty){
-          return Center(child: Text('No task found'),);
+          return const Center(child: Text('No task found'),);
         }
         return ListView.builder(
             itemCount: taskController.tasks.length,
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
               return Card(
                 elevation: 50,
                 shadowColor: Colors.blue,
-                margin: EdgeInsets.all(8),
+                margin: const EdgeInsets.all(8),
                 child: ListTile(
                   onTap: (){
                     Get.bottomSheet(
@@ -89,8 +89,8 @@ class _HomePageState extends State<HomePage> {
                     );
                 
                   },
-                  title: Text(task!.title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  subtitle: Text(task.description, style: TextStyle(fontSize: 14),),
+                  title: Text(task.title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                  subtitle: Text(task.description, style: const TextStyle(fontSize: 14),),
                   trailing: Checkbox(
                     //assigning the value to the ui
                       value: task.status == 1,
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                         // setState(() {
                         // });
                       }),
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: const EdgeInsets.all(10),
                 ),
               );
 

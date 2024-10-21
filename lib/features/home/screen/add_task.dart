@@ -34,18 +34,18 @@ class _AddTaskState extends State<AddTask> {
               children: [
                 TextFormField(
                   controller: titleController,
-                  decoration: InputDecoration(labelText: 'title'.tr, border: OutlineInputBorder()),
+                  decoration: InputDecoration(labelText: 'title'.tr, border: const OutlineInputBorder()),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Title';
                     return null;
                   },
             
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
             
                 TextFormField(
                   controller: descriptionController,
-                  decoration: InputDecoration(labelText: 'description'.tr, border: OutlineInputBorder()),
+                  decoration: InputDecoration(labelText: 'description'.tr, border: const OutlineInputBorder()),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter a description.';
                     return null;

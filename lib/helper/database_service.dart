@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../Models/tasks.dart';
+import '../features/home/domain/model/tasks.dart';
 
 class DatabaseService {
   //starts ------->setting up database
@@ -26,9 +26,9 @@ class DatabaseService {
   //getter method to get database
   Future<Database?> get database async {
     //if database exists then return it
-    if (_db != null)
+    if (_db != null) {
       return _db;
-    else {
+    } else {
       //create and get database
       _db = await getDatabase();
       return _db;

@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:sqflite_crud_practice_project/services/database_service.dart';
+import 'package:sqflite_crud_practice_project/helper/database_service.dart';
 
 class TaskController extends GetxController{
 

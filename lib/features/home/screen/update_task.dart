@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:sqflite_crud_practice_project/Models/tasks.dart';
+import 'package:sqflite_crud_practice_project/features/home/domain/model/tasks.dart';
 import 'package:sqflite_crud_practice_project/controllers/task_controllers.dart';
-import 'package:sqflite_crud_practice_project/services/database_service.dart';
 
 class UpdateTask extends StatefulWidget {
   //final Tasks tasks;
@@ -64,19 +62,19 @@ class _UpdateTaskState extends State<UpdateTask> {
 
                   controller: titleController,
                   // initialValue: title,
-                  decoration: InputDecoration(labelText: 'title'.tr, border: OutlineInputBorder()),
+                  decoration: InputDecoration(labelText: 'title'.tr, border: const OutlineInputBorder()),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Title';
                     return null;
                   },
 
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
                 TextFormField(
                   controller: descriptionController,
                   // initialValue: description,
-                  decoration: InputDecoration(labelText: 'description'.tr, border: OutlineInputBorder()),
+                  decoration: InputDecoration(labelText: 'description'.tr, border: const OutlineInputBorder()),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter a description.';
                     return null;
@@ -110,7 +108,7 @@ class _UpdateTaskState extends State<UpdateTask> {
                     //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Please Complete Task"),));
                     // }
                   },
-                  child: Text("Update Task"),
+                  child: const Text("Update Task"),
                 ),
               ],
             ),
