@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqflite_crud_practice_project/controllers/task_controllers.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -91,92 +90,115 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: taskController.taskList.length,
-                  (BuildContext context, int index) {
-                    var task = taskController.taskList[index];
-                    return InkWell(
-                      splashColor: Theme.of(context).primaryColorLight,
-                      onTap: () {
-                        //passing object to another screen
-                        Get.toNamed('/update_task', arguments: task);
-                      },
-                      child: Card(
-                        elevation: 10,
-                        shadowColor: Colors.blue,
-                        margin: const EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      taskController.deleteTaskController(task.id);
-                                    },
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    )),
-                                Checkbox(
-                                    //assigning the value to the ui
-                                    value: task.status == 1,
-                                    onChanged: (val) {
-                                      taskController.updateTaskController(
-                                          task.id,
-                                          task.title,
-                                          task.description,
-                                          (val == true ? 1 : 0));
-                                      // setState(() {
-                                      // });
-                                    }),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+              if (taskController.taskList.isEmpty)
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                      height: 400,
+                      child: Center(
+                        child: Text(
+                          'no_task'.tr,
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )),
+                )
+              else
+                SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: taskController.taskList.length,
+                    (BuildContext context, int index) {
+                      var task = taskController.taskList[index];
+                      return InkWell(
+                        splashColor: Theme.of(context).primaryColorLight,
+                        onTap: () {
+                          //passing object to another screen
+                          Get.toNamed('/update_task', arguments: task);
+                        },
+                        child: Card(
+                          elevation: 10,
+                          shadowColor: Colors.blue,
+                          margin: const EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    task.title,
-                                    maxLines: 2,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    task.description,
-                                    maxLines: 2,
-                                    style: const TextStyle(fontSize: 14),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        taskController
+                                            .deleteTaskController(task.id);
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      )),
+                                  Checkbox(
+                                      //assigning the value to the ui
+                                      value: task.status == 1,
+                                      onChanged: (val) {
+                                        taskController.updateTaskController(
+                                            task.id,
+                                            task.title,
+                                            task.description,
+                                            (val == true ? 1 : 0));
+                                        // setState(() {
+                                        // });
+                                      }),
                                 ],
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                height: 10,
+                              ),
+
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      task.title,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: task.status == 1 ? TextDecoration.lineThrough : TextDecoration.none),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+
+                                    Text(
+                                      task.description,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          decoration: task.status == 1 ? TextDecoration.lineThrough : TextDecoration.none),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-              ),
             ],
           );
+
+          ///without SliverAppBar and Gridview
+
           // return SingleChildScrollView(
           //   child: Column(
           //     children: [
