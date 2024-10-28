@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ///routing
 
       // initialRoute: '/home',
-      defaultTransition: Transition.fadeIn,
+      defaultTransition: Transition.topLevel,
 
       getPages: [
         GetPage(name: '/home', page: () => const HomePage()),
