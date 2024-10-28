@@ -34,14 +34,14 @@ class _HomePageState extends State<HomePage> {
         body: Obx(() {
           // print('==============>${taskController.taskList.length}');
           return CustomScrollView(
-            shrinkWrap: true,
+            // shrinkWrap: true,
             slivers: [
               SliverAppBar(
                 backgroundColor: Colors.blue,
-                floating: false,
-                pinned: true,
+                floating: true,
+                pinned: false,
                 collapsedHeight: 80,
-                expandedHeight: 150,
+                expandedHeight: 100,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: Container(
