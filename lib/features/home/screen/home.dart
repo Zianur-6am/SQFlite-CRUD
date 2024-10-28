@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    elevation: 10,
+                    elevation: 20,
                     color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.all(8),
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                       Tasks task = taskController.taskList[index];
 
                       return Card(
-                        elevation: 5,
+                        elevation: 10,
                         shadowColor: Colors.blue,
                         margin: const EdgeInsets.all(8),
                         child: ListTile(

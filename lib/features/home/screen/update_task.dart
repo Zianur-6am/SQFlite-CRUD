@@ -50,15 +50,18 @@ class _UpdateTaskState extends State<UpdateTask> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Center(
+      body: Container(
+        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.only(top: 100, bottom: 50),
+        child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   controller: titleController,
                   // initialValue: title,
                   decoration: InputDecoration(labelText: 'title'.tr, border: const OutlineInputBorder()),
@@ -72,6 +75,8 @@ class _UpdateTaskState extends State<UpdateTask> {
 
                 TextFormField(
                   controller: descriptionController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   // initialValue: description,
                   decoration: InputDecoration(labelText: 'description'.tr, border: const OutlineInputBorder()),
                   validator: (value) {
@@ -81,33 +86,40 @@ class _UpdateTaskState extends State<UpdateTask> {
 
                 ),
 
-                ElevatedButton(
-                  onPressed: (){
-                    title = titleController.text.trim();
-                    description = descriptionController.text.trim();
+                Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  margin: EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue
+                    ),
+                    onPressed: (){
+                      title = titleController.text.trim();
+                      description = descriptionController.text.trim();
 
-                    if(_formKey.currentState!.validate()){
+                      if(_formKey.currentState!.validate()){
 
-                      taskController.updateTaskController(id!, title!, description!, status!);
-                      Get.back();
+                        taskController.updateTaskController(id!, title!, description!, status!);
+                        Get.back();
 
-                    }
+                      }
 
-                    ///without form validation
-                    // if((title?.isNotEmpty ?? false) &&
-                    //     (description?.isNotEmpty ?? false)){
-                    //
-                    //
-                    //
-                    //   taskController.updateTaskController(id!, title!, description!, status!);
-                    //
-                    //   Get.back();
-                    // }
-                    // else{
-                    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Please Complete Task"),));
-                    // }
-                  },
-                  child: const Text("Update Task"),
+                      ///without form validation
+                      // if((title?.isNotEmpty ?? false) &&
+                      //     (description?.isNotEmpty ?? false)){
+                      //
+                      //
+                      //
+                      //   taskController.updateTaskController(id!, title!, description!, status!);
+                      //
+                      //   Get.back();
+                      // }
+                      // else{
+                      //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Please Complete Task"),));
+                      // }
+                    },
+                    child: Text("update_task".tr, style: TextStyle(color: Colors.white),),
+                  ),
                 ),
               ],
             ),

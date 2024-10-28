@@ -24,9 +24,10 @@ class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: Container(
         padding: const EdgeInsets.all(20),
-        child: Center(
+        margin: const EdgeInsets.only(top: 100, bottom: 50),
+        child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
@@ -34,45 +35,56 @@ class _AddTaskState extends State<AddTask> {
               children: [
                 TextFormField(
                   controller: titleController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   decoration: InputDecoration(labelText: 'title'.tr, border: const OutlineInputBorder()),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Title';
                     return null;
                   },
-            
+
                 ),
                 const SizedBox(height: 10,),
-            
+
                 TextFormField(
                   controller: descriptionController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   decoration: InputDecoration(labelText: 'description'.tr, border: const OutlineInputBorder()),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter a description.';
                     return null;
                   },
-            
+
                 ),
-                ElevatedButton(
-                    onPressed: (){
-                      if (_formKey.currentState!.validate()) {
+                Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  margin: EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue
+                    ),
+                      onPressed: (){
+                        if (_formKey.currentState!.validate()) {
 
-                        taskController.addTaskController(titleController.text, descriptionController.text);
-                        Get.back();
-                      }
+                          taskController.addTaskController(titleController.text, descriptionController.text);
+                          Get.back();
+                        }
 
-                      ///without form validation
-                      // if(titleController.text.replaceAll(' ', '') != "" &&
-                      //     descriptionController.text.replaceAll(' ', '') != ""){
-                      //
-                      //   taskController.addTaskController(titleController.text, descriptionController.text);
-                      //
-                      //   Get.back();
-                      // }
-                      // else{
-                      //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Please fill the task"),));
-                      // }
-                    },
-                    child: const Text("Add Task"),
+                        ///without form validation
+                        // if(titleController.text.replaceAll(' ', '') != "" &&
+                        //     descriptionController.text.replaceAll(' ', '') != ""){
+                        //
+                        //   taskController.addTaskController(titleController.text, descriptionController.text);
+                        //
+                        //   Get.back();
+                        // }
+                        // else{
+                        //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar( content: Text("Please fill the task"),));
+                        // }
+                      },
+                      child: Text("add_task".tr, style: TextStyle(color: Colors.white),),
+                  ),
                 ),
               ],
             ),
