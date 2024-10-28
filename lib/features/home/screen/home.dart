@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
         body: Obx(() {
           // print('==============>${taskController.taskList.length}');
           return CustomScrollView(
+            shrinkWrap: true,
             slivers: [
               SliverAppBar(
                 backgroundColor: Colors.blue,
@@ -69,8 +70,8 @@ class _HomePageState extends State<HomePage> {
                                 child: TextField(
                                   textInputAction: TextInputAction.go,
                                   onChanged: taskController.filterTaskByName,
-                                  decoration: const InputDecoration(
-                                    hintText: "Search Task by Name",
+                                  decoration: InputDecoration(
+                                    hintText: "search_task".tr,
                                     hintStyle: TextStyle(color: Colors.black38),
                                     border: InputBorder.none,
                                   ),

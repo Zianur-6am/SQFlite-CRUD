@@ -14,6 +14,7 @@ class Messages extends Translations{
       'no_task' : 'No Task found',
       'update_task' : 'Update Task',
       'add_task' : 'Add Task',
+      'search_task' : 'Search Task',
     }
   };
 
