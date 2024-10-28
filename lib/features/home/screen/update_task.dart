@@ -59,7 +59,6 @@ class _UpdateTaskState extends State<UpdateTask> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
-
                   controller: titleController,
                   // initialValue: title,
                   decoration: InputDecoration(labelText: 'title'.tr, border: const OutlineInputBorder()),

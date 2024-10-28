@@ -11,6 +11,7 @@ class Messages extends Translations{
       'update_task' : 'Update Task',
       'title' : 'Title',
       'description' : 'Description',
+      'no_task' : 'No Task found',
     }
   };
 

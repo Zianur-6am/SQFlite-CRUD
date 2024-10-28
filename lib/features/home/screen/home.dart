@@ -77,12 +77,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                if(taskController.taskList.isEmpty) const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(child: Text('no task'),),
-                  ],
-                )
+                if(taskController.taskList.isEmpty)
+                  SizedBox(
+                    height: 400,
+                    child: Center(
+                      child: Text('no_task'.tr, style: TextStyle(color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),),
+                    )
+                  )
                 else ListView.builder(
                     itemCount: taskController.taskList.length,
                     scrollDirection: Axis.vertical,
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                       Tasks task = taskController.taskList[index];
 
                       return Card(
-                        elevation: 10,
+                        elevation: 5,
                         shadowColor: Colors.blue,
                         margin: const EdgeInsets.all(8),
                         child: ListTile(
